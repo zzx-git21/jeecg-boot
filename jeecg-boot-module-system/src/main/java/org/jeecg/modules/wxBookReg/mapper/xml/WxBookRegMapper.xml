@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.wxBookReg.mapper.WxBookRegMapper">
+
+    <select id="queryBookReg" resultType="org.jeecg.modules.wxBookReg.model.BookRegVo">
+        select a.id regId, b.study_name studentName, b.sex sex, a.strip_status stripStatus, a.book_level bookLevel,
+            c.avatar pic, a.desposit desposit
+        from wx_book_reg a,wx_studynew b, sys_user c
+        where a.user_id = b.user_id and a.user_id = c.id
+        and a.strip_ma = #{stripma}
+    </select>
+
+</mapper>

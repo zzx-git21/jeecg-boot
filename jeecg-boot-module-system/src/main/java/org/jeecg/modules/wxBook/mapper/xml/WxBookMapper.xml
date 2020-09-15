@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.wxBook.mapper.WxBookMapper">
+    <resultMap id="WxBook" type="org.jeecg.modules.wxBook.entity.WxBook">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="sys_org_code" property="sysOrgCode" jdbcType="VARCHAR"/>
+        <result column="book_isbn" property="bookIsbn" jdbcType="VARCHAR"/>
+        <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+        <result column="book_author" property="bookAuthor" jdbcType="VARCHAR"/>
+        <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP"/>
+        <result column="publish_id" property="publishId" jdbcType="VARCHAR"/>
+        <result column="publish_name" property="publishName" jdbcType="VARCHAR"/>
+        <result column="class_id" property="classId" jdbcType="VARCHAR"/>
+        <result column="class_name" property="className" jdbcType="VARCHAR"/>
+        <result column="book_price" property="bookPrice" jdbcType="DOUBLE"/>
+        <result column="book_page" property="bookPage" jdbcType="INTEGER"/>
+        <result column="book_open" property="bookOpen" jdbcType="VARCHAR"/>
+        <result column="own_lanague" property="ownLanague" jdbcType="VARCHAR"/>
+        <result column="book_layout" property="bookLayout" jdbcType="VARCHAR"/>
+        <result column="book_rate" property="bookRate" jdbcType="VARCHAR"/>
+        <result column="mark" property="mark" jdbcType="VARCHAR"/>
+        <result column="strip_ma" property="stripMa" jdbcType="VARCHAR"/>
+        <result column="own_shcool" property="ownShcool" jdbcType="VARCHAR"/>
+        <result column="bookself_location" property="bookselfLocation" jdbcType="VARCHAR"/>
+        <result column="book_gain" property="bookGain" jdbcType="VARCHAR"/>
+        <result column="book_total" property="bookTotal" jdbcType="INTEGER"/>
+        <result column="book_surplus" property="bookSurplus" jdbcType="INTEGER"/>
+        <result column="is_point" property="isPoint" jdbcType="INTEGER"/>
+        <result column="book_img" property="bookImg" jdbcType="VARCHAR"/>
+        <result column="is_recommend" property="isRecommend" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="WxBookRegRelMap" type="org.jeecg.modules.wxBook.entity.WxBookRegRel">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="sys_org_code" jdbcType="VARCHAR" property="sysOrgCode"/>
+        <result column="book_reg_id" jdbcType="VARCHAR" property="bookRegId"/>
+        <result column="book_id" jdbcType="VARCHAR" property="bookId"/>
+        <result column="is_borrow" jdbcType="INTEGER" property="isBorrow"/>
+        <result column="is_returned" jdbcType="INTEGER" property="isReturned"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="borrow_day" jdbcType="INTEGER" property="borrowDay"/>
+        <result column="return_time" jdbcType="TIMESTAMP" property="returnTime"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="book_name" jdbcType="VARCHAR" property="bookName"/>
+    </resultMap>
+
+
+    <!--	<select id="queryList" parameterType="Object"  resultMap="WxBook">
+             select a.* from wx_book a, wx_book_grade_rel b
+                where a.id=b.book_id
+                <if test="gradeId !=null and gradeId != ''">
+                       and b.grade_id=#{gradeId}
+               </if>
+
+                <if test="wxBook.id !=null and wxBook.id != ''"> and a.id = #{wxBook.id} </if>
+                <if test="wxBook.createBy !=null and wxBook.createBy != ''"> and a.create_by = #{wxBook.createBy} </if>
+                <if test="wxBook.createTime !=null and wxBook.createTime != ''"> and a.create_time = #{wxBook.createTime} </if>
+                <if test="wxBook.updateBy !=null and wxBook.updateBy != ''"> and a.update_by = #{wxBook.updateBy} </if>
+                <if test="wxBook.updateTime !=null and wxBook.updateTime != ''"> and a.update_time = #{wxBook.updateTime} </if>
+                <if test="wxBook.sysOrgCode !=null and wxBook.sysOrgCode != ''"> and a.sys_org_code = #{wxBook.sysOrgCode} </if>
+                <if test="wxBook.bookIsbn !=null and wxBook.bookIsbn != ''"> and a.book_isbn = #{wxBook.bookIsbn} </if>
+                <if test="wxBook.bookName !=null and wxBook.bookName != ''"> and a.book_name = #{wxBook.bookName} </if>
+                <if test="wxBook.bookAuthor !=null and wxBook.bookAuthor != ''"> and a.book_author = #{wxBook.bookAuthor} </if>
+                <if test="wxBook.publishTime !=null and wxBook.publishTime != ''"> and a.publish_time = #{wxBook.publishTime} </if>
+                <if test="wxBook.publishId !=null and wxBook.publishId != ''"> and a.publish_id = #{wxBook.publishId} </if>
+                <if test="wxBook.publishName !=null and wxBook.publishName != ''"> and a.publish_name = #{wxBook.publishName} </if>
+                <if test="wxBook.classId !=null and wxBook.classId != ''"> and a.class_id = #{wxBook.classId} </if>
+                <if test="wxBook.className !=null and wxBook.className != ''"> and a.class_name = #{wxBook.className} </if>
+                <if test="wxBook.bookPrice !=null and wxBook.bookPrice != ''"> and a.book_price = #{wxBook.bookPrice} </if>
+                <if test="wxBook.bookPage !=null and wxBook.bookPage != ''"> and a.book_page = #{wxBook.bookPage} </if>
+                <if test="wxBook.bookOpen !=null and wxBook.bookOpen != ''"> and a.book_open = #{wxBook.bookOpen} </if>
+                <if test="wxBook.ownLanague !=null and wxBook.ownLanague != ''"> and a.own_lanague = #{wxBook.ownLanague} </if>
+                <if test="wxBook.bookLayout !=null and wxBook.bookLayout != ''"> and a.book_layout = #{wxBook.bookLayout} </if>
+                <if test="wxBook.bookRate !=null and wxBook.bookRate != ''"> and a.book_rate = #{wxBook.bookRate} </if>
+                <if test="wxBook.mark !=null and wxBook.mark != ''"> and a.mark = #{wxBook.mark} </if>
+                <if test="wxBook.stripMa !=null and wxBook.stripMa != ''"> and a.strip_ma = #{wxBook.stripMa} </if>
+                <if test="wxBook.ownShcool !=null and wxBook.ownShcool != ''"> and a.own_shcool = #{wxBook.ownShcool} </if>
+                <if test="wxBook.bookselfLocation !=null and wxBook.bookselfLocation != ''"> and a.bookself_location = #{wxBook.bookselfLocation} </if>
+                <if test="wxBook.bookGain !=null and wxBook.bookGain != ''"> and a.book_gain = #{wxBook.bookGain} </if>
+                <if test="wxBook.bookTotal !=null and wxBook.bookTotal != ''"> and a.book_total = #{wxBook.bookTotal} </if>
+                <if test="wxBook.bookSurplus !=null and wxBook.bookSurplus != ''"> and a.book_surplus = #{wxBook.bookSurplus} </if>
+                <if test="wxBook.isPoint !=null and wxBook.isPoint != ''"> and a.is_point = #{wxBook.isPoint} </if>
+                <if test="wxBook.bookImg !=null and wxBook.bookImg != ''"> and a.book_img = #{wxBook.bookImg} </if>
+
+
+                order by  a.create_time  desc
+        </select>-->
+<!-- 
+    <select id="queryList" parameterType="Object" resultMap="WxBook">
+        select a.* from wx_book a, wx_book_grade_rel b
+        where a.id=b.book_id and a.book_surplus > 0
+        <if test="gradeId !=null and gradeId != ''">
+            and b.grade_id=#{gradeId}
+        </if>
+
+        <if test="bookregId != null and bookregId != ''">
+            and a.id not in (select book_id from wx_book_reg_rel where book_reg_id = #{bookregId} and is_returned
+            in(0,2) and is_borrow = 1)
+        </if>
+        <if test="wxBook.bookName !=null and wxBook.bookName != ''">and a.book_name like concat('%', #{wxBook.bookName},
+            '%' )
+        </if>
+        order by a.create_time desc
+    </select>
+ -->
+ 
+  <select id="queryList" parameterType="Object" resultMap="WxBook">
+        select a.* from wx_book a
+        where 1=1 
+        <if test="wxBook.bookName !=null and wxBook.bookName != ''">
+        and a.book_name like concat('%', #{wxBook.bookName},
+            '%' )
+        </if>
+         <if test="wxBook.sysOrgCode !=null and wxBook.sysOrgCode != ''">
+        and a.sys_org_code = #{wxBook.sysOrgCode}
+
+        </if>
+        order by a.create_time desc
+    </select>
+    <select id="queryKeptBookList" parameterType="Object" resultMap="WxBook">
+		select b.* from  wx_book b
+		where b.id in (select book_id from wx_book_reg_rel where book_reg_id = #{bookregId} and is_returned in(0,2) and is_borrow = 1 )
+		order by b.create_time  desc
+	</select>
+
+    <select id="queryRecommendBookList" parameterType="Object" resultMap="WxBook">
+        select a.* from wx_book a, wx_book_grade_rel b
+        where a.id=b.book_id and a.book_surplus > 0 
+        <if test="gradeId !=null and gradeId != ''">
+            and b.grade_id=#{gradeId}
+        </if>
+
+        <if test="bookregId != null and bookregId != ''">
+            and a.id not in (select book_id from wx_book_reg_rel where book_reg_id = #{bookregId} and is_returned
+            in(0,2) and is_borrow = 1 )
+        </if>
+        order by a.create_time desc
+    </select>
+
+
+    <select id="queryUserKeptBook" resultType="java.lang.Integer">
+		select count(*) coun from wx_book_reg_rel
+		where is_borrow = 1 and is_returned in (0, 2)
+		and book_reg_id = #{bookregId} and book_id = #{bookId}
+	</select>
+
+    <insert id="insertBookRegRel" parameterType="org.jeecg.modules.wxBook.entity.WxBookRegRel">
+		insert into wx_book_reg_rel (create_by, book_reg_id, book_id, is_borrow,
+		  is_returned, book_name)
+		values (#{createBy,jdbcType=VARCHAR},
+		  #{bookRegId,jdbcType=VARCHAR}, #{bookId,jdbcType=VARCHAR}, #{isBorrow,jdbcType=INTEGER},
+		  #{isReturned,jdbcType=INTEGER},  #{bookName,jdbcType=VARCHAR})
+	</insert>
+
+	<insert id="insertBookRegRelBatch" parameterType="java.util.List">
+		insert into wx_book_reg_rel (book_reg_id, book_id, is_borrow,
+		  is_returned, book_name, borrow_day, start_time, remark, return_time)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.bookRegId,jdbcType=VARCHAR}, #{item.bookId,jdbcType=VARCHAR}, #{item.isBorrow,jdbcType=INTEGER},
+			#{item.isReturned,jdbcType=INTEGER},  #{item.bookName,jdbcType=VARCHAR}, #{item.borrowDay,jdbcType=INTEGER},
+            #{item.startTime,jdbcType=TIMESTAMP}, #{item.remark,jdbcType=VARCHAR}, #{item.returnTime,jdbcType=TIMESTAMP})
+		</foreach>
+	</insert>
+
+    <update id="regulationBooks">
+        update wx_book set
+        <if test="type == 0">
+            book_surplus = book_surplus - 1
+        </if>
+        <if test="type == 1">
+            book_surplus = book_surplus + 1
+        </if>
+
+        where id = #{bookId}
+    </update>
+
+    <select id="selectBookRegRelById" resultMap="WxBookRegRelMap">
+		select * from wx_book_reg_rel where id = #{relId} and book_reg_id = #{bookregId}
+	</select>
+
+    <update id="returnBook">
+		update wx_book_reg_rel set is_returned = 2, return_time = now(), update_time = now()
+		where id = #{relId} and book_reg_id = #{bookregId} and is_borrow = 1 and is_returned = 0
+	</update>
+
+    <update id="returnBookAdmin">
+		update wx_book_reg_rel set is_returned = 1, return_time = now(), update_time = now()
+		where id = #{relId} and book_reg_id = #{bookregId} and is_borrow = 1 and is_returned = 0
+	</update>
+
+    <select id="queryBorrowList" resultType="org.jeecg.modules.wxBook.model.BookRegRelVO">
+        select a.id, a.book_id bookId, a.book_name bookName, a.start_time startTime,
+        case
+        when a.is_borrow = 0 then null
+        when a.is_borrow = 1 and a.is_returned = 0 then date_add(a.start_time, interval a.borrow_day day)
+        when a.is_borrow = 1 and a.is_returned = 2 then date_add(a.start_time, interval a.borrow_day day)
+        when a.is_borrow = 1 and a.is_returned = 1 then a.return_time
+        when a.is_borrow = 2 then null
+        end returnTime,
+        case
+        when a.is_borrow = 0 then 0
+        when a.is_borrow = 1 and a.is_returned = 0 then 1
+        when a.is_borrow = 1 and a.is_returned = 2 then 2
+        when a.is_borrow = 1 and a.is_returned = 1 then 3
+        when a.is_borrow = 2 then 4
+        end status,
+        c.xueji_hao xuejihao, c.study_name studentName
+        from wx_book_reg_rel a, wx_book_reg b, wx_studynew c
+        where a.book_reg_id = b.id and b.user_id = c.user_id
+        and a.book_reg_id = #{bookregId}
+        <if test="type == 0">
+            and a.is_borrow in (0,1) and a.is_returned in (0,2)
+        </if>
+        <if test="type == 1">
+            and ((a.is_borrow = 1 and a.is_returned = 1) or a.is_borrow = 2)
+        </if>
+        order by a.create_time desc
+    </select>
+
+    <select id="queryBorrowedCount" resultType="java.lang.Integer">
+		select count(*) from (
+		select distinct book_id from wx_book_reg_rel
+		where book_reg_id = #{bookregId}  and is_borrow = 1 and is_returned = 1 ) tem
+	</select>
+
+
+<select id="queryHaveTuijianBookList" parameterType="Object"  resultType="java.util.HashMap">
+	     select a.id id,
+	     a.book_name bookName,
+	     a.book_author bookAuthor,
+	     a.book_img bookImg,
+	     b.id bookGradeRelId
+	     from wx_book a,
+	      wx_book_grade_rel b
+			where a.id=b.book_id
+			<if test="gradeId !=null and gradeId != ''">
+		   		and b.grade_id=#{gradeId}
+		   </if> 
+		   <if test="wxBook.bookName !=null and wxBook.bookName != ''">
+		   		and a.book_name = #{wxBook.bookName}
+		   </if>
+		   
+			order by  a.create_time  desc
+	</select>
+
+<select id="queryNeedTuijianBookList" parameterType="Object"  resultType="java.util.HashMap">
+	     select a.id id,
+	     a.book_name bookName,
+	     a.book_author bookAuthor,
+	     a.book_img bookImg
+	     from wx_book a
+	      	where 
+a.id not in(
+ select c.book_id from wx_book_grade_rel c where c.grade_id=#{gradeId}
+)
+		    <if test="wxBook.bookName !=null and wxBook.bookName != ''">
+		   		and a.book_name = #{wxBook.bookName}
+		   </if>
+		   
+			order by  a.create_time  desc
+	</select>
+</mapper>

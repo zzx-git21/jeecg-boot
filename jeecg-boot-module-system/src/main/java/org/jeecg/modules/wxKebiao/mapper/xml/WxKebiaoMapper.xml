@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="org.jeecg.modules.wxKebiao.mapper.WxKebiaoMapper">
+	<select id="getByMoth" parameterType="Object" resultType="map">
+		select DATE_FORMAT(start_time,'%Y%m') months from wx_kebiao
+		where banji_code=#{banjiCode}
+		group by months
+	</select>
+
+	<select id="getByDetailMoth" parameterType="Object"
+		resultType="map">
+		select id, DATE_FORMAT(a.start_time,'%Y%m') months,a.course_start_time,a.course_end_time ,a.course_times
+		,a.teacher,
+a.zhouji,a.start_time 
+	from wx_kebiao as a	where a.banji_code=#{banjiCode}
+		and DATE_FORMAT(a.start_time,'%Y%m')=#{months}
+	</select>
+
+<select id="getListStudy" parameterType="Object"
+		resultType="map">
+select a.study_name,a.id,a.user_name,a.banji_id,"0" as isKaoqing,a.user_id from wx_studynew as a
+where a.banji_id=#{banjiCode}
+	</select>
+
+</mapper> 

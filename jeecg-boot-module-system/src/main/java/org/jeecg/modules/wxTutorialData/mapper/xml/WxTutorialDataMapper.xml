@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.wxTutorialData.mapper.WxTutorialDataMapper">
+
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.wxTutorialData.entity.WxTutorialData">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="sys_org_code" jdbcType="VARCHAR" property="sysOrgCode" />
+        <result column="data_name" jdbcType="VARCHAR" property="dataName" />
+        <result column="data_desc" jdbcType="VARCHAR" property="dataDesc" />
+        <result column="data_url" jdbcType="VARCHAR" property="dataUrl" />
+        <result column="grade_id" jdbcType="INTEGER" property="gradeId" />
+        <result column="is_recommend" jdbcType="INTEGER" property="isRecommend" />
+        <result column="data_pic" jdbcType="VARCHAR" property="dataPic" />
+        <result column="data_text" jdbcType="LONGVARCHAR" property="dataText" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, create_by, create_time, update_by, update_time, sys_org_code, data_name, data_desc,
+        data_url, grade_id, is_recommend, data_pic, data_text
+    </sql>
+
+    <select id="queryList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from wx_tutorial_data
+        where 1=1
+        <if test="map.gradeId != null">
+            and grade_id = #{map.gradeId}
+        </if>
+        <if test="map.dataName != null and map.dataName != ''">
+            and data_name like concat('%', #{map.dataName}, '%' )
+        </if>
+        <if test="map.recommoend != null and map.recommoend != 0">
+            and is_recommend = 1
+        </if>
+        order by create_time desc
+    </select>
+
+</mapper>

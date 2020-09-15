@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.system.mapper.SysUserMapper">
+
+	<!-- 根据用户名查询 -->
+	<select id="getUserByName" resultType="org.jeecg.modules.system.entity.SysUser">
+		select * from  sys_user  where username = #{username} and del_flag = '0'
+	</select>
+
+	<!-- 根据部门Id查询 -->
+	<select id="getUserByDepId" resultType="org.jeecg.modules.system.entity.SysUser">
+		select * from sys_user where del_flag = '0' and id in (select user_id from sys_user_depart where dep_id=#{departId})
+		<if test="username!=null and username!=''">
+			and username = #{username}
+		</if>
+	</select>
+
+	<!-- 根据角色Id查询 -->
+	<select id="getUserByRoleId" resultType="org.jeecg.modules.system.entity.SysUser">
+		select * from sys_user where del_flag = '0' and id in (select user_id from sys_user_role where role_id=#{roleId})
+		<if test="username!=null and username!=''">
+			and username = #{username}
+		</if>
+	</select>
+	
+	<!--  修改用户部门code -->
+	<update id="updateUserDepart">
+		UPDATE sys_user SET org_code = #{orgCode} where username = #{username}
+	</update>
+
+	<!-- 根据手机号查询 -->
+	<select id="getUserByPhone"  resultType="org.jeecg.modules.system.entity.SysUser">
+		select * from  sys_user  where phone = #{phone} and del_flag = '0'
+	</select>
+	
+	<!-- 根据邮箱查询用户信息 -->
+	<select id="getUserByEmail" resultType="org.jeecg.modules.system.entity.SysUser">
+	select * from  sys_user  where email = #{email} and del_flag = '0'
+	</select>
+	
+	<select id="queryStudentUserList" parameterType="Object"  resultType="java.util.HashMap">
+	   select a.id id,
+	   a.username username,
+	   a.realname realname,
+	   a.sex sex
+	   
+	   from sys_user a, wx_studynew b
+			where a.id=b.user_id
+			<if test="userName !=null and userName != ''">
+		   		and a.username like  concat('%', #{userName}, '%' )
+		   </if>
+		  
+			order by  a.create_time  desc
+	</select>
+	
+	<select id="queryUserListByRole" parameterType="Object"  resultType="java.util.HashMap">
+	   select a.id id,
+	   a.username username,
+	   a.realname realname,
+	   a.sex sex
+	   
+	   from sys_user a, sys_user_role b
+			where a.id=b.user_id
+			 and b.role_id=#{roleId}
+			<if test="userName !=null and userName != ''">
+		   		and a.username like  concat('%', #{userName}, '%' )
+		   </if>
+		  
+			order by  a.create_time  desc
+	</select>
+</mapper>

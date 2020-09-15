@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.wxStory.mapper.WxStoryMapper">
+<resultMap id="WxStory" type="org.jeecg.modules.wxStory.entity.WxStory" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="sys_org_code" property="sysOrgCode" jdbcType="VARCHAR"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="category" property="category" jdbcType="VARCHAR"/>
+		<result column="story_desc" property="storyDesc" jdbcType="VARCHAR"/>
+		<result column="story_text" property="storyText" jdbcType="VARCHAR"/>
+		<result column="story_url" property="storyUrl" jdbcType="VARCHAR"/>
+		<result column="story_key" property="storyKey" jdbcType="VARCHAR"/>
+		<result column="is_download" property="isDownload" jdbcType="INTEGER"/>
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
+	</resultMap> 
+		<select id="queryStoreyList" parameterType="Object"  resultMap="WxStory">
+	     select a.* from wx_story a
+			where 1=1
+		
+		   <if test="wxStory.id !=null and wxStory.id != ''">
+		   		and a.id = #{wxStory.id}
+		   </if>
+		   <if test="wxStory.sysOrgCode !=null and wxStory.sysOrgCode != ''">
+		   		and a.sys_org_code = #{wxStory.sysOrgCode}
+		   </if>
+		   <if test="wxStory.title !=null and wxStory.title != ''">
+		   		and a.title = #{wxStory.title}
+		   </if>
+		   <if test="wxStory.category !=null and wxStory.category != ''">
+		   		and a.category = #{wxStory.category}
+		   </if>
+		   <if test="wxStory.storyDesc !=null and wxStory.storyDesc != ''">
+		   		and a.story_desc = #{wxStory.storyDesc}
+		   </if>
+		   <if test="wxStory.storyText !=null and wxStory.storyText != ''">
+		   		and a.story_text = #{wxStory.storyText}
+		   </if>
+		   <if test="wxStory.storyUrl !=null and wxStory.storyUrl != ''">
+		   		and a.story_url = #{wxStory.storyUrl}
+		   </if>
+		   <if test="wxStory.storyKey !=null and wxStory.storyKey != ''">
+		   		and a.story_key = #{wxStory.storyKey}
+		   </if>
+		   <if test="wxStory.isDownload !=null and wxStory.isDownload != ''">
+		   		and a.is_download = #{wxStory.isDownload}
+		   </if>
+		   <if test="wxStory.imgUrl !=null and wxStory.imgUrl != ''">
+		   		and a.img_url = #{wxStory.imgUrl}
+		   </if>
+		 
+			group by a.category
+			  order by a.category asc
+	</select>
+	
+	
+	<select id="queryCateGroyList" parameterType="Object"  resultMap="WxStory">
+	     select a.* from wx_story a 
+		   where 1=1
+		   <if test="wxStory.id !=null and wxStory.id != ''">
+		   		and a.id = #{wxStory.id}
+		   </if>
+		   <if test="wxStory.sysOrgCode !=null and wxStory.sysOrgCode != ''">
+		   		and a.sys_org_code = #{wxStory.sysOrgCode}
+		   </if>
+		   <if test="wxStory.title !=null and wxStory.title != ''">
+		   		and a.title = #{wxStory.title}
+		   </if>
+		   <if test="wxStory.category !=null and wxStory.category != ''">
+		   		and a.category = #{wxStory.category}
+		   </if>
+		   <if test="wxStory.storyDesc !=null and wxStory.storyDesc != ''">
+		   		and a.story_desc = #{wxStory.storyDesc}
+		   </if>
+		   <if test="wxStory.storyText !=null and wxStory.storyText != ''">
+		   		and a.story_text = #{wxStory.storyText}
+		   </if>
+		   <if test="wxStory.storyUrl !=null and wxStory.storyUrl != ''">
+		   		and a.story_url = #{wxStory.storyUrl}
+		   </if>
+		   <if test="wxStory.storyKey !=null and wxStory.storyKey != ''">
+		   		and a.story_key = #{wxStory.storyKey}
+		   </if>
+		   <if test="wxStory.isDownload !=null and wxStory.isDownload != ''">
+		   		and a.is_download = #{wxStory.isDownload}
+		   </if>
+		   <if test="wxStory.imgUrl !=null and wxStory.imgUrl != ''">
+		   		and a.img_url = #{wxStory.imgUrl}
+		   </if>
+		   group by a.title
+			order by  a.title asc
+	</select>
+	
+	<select id="queryList" parameterType="Object"  resultMap="WxStory">
+	     select a.* from wx_story a, wx_story_grade_rel b
+			where a.id=b.story_id
+			<if test="gradeId !=null and gradeId != ''">
+		   		and b.grade_id=#{gradeId}
+		   </if>
+		   
+		   <if test="wxStory.id !=null and wxStory.id != ''">
+		   		and a.id = #{wxStory.id}
+		   </if>
+		   <if test="wxStory.sysOrgCode !=null and wxStory.sysOrgCode != ''">
+		   		and a.sys_org_code = #{wxStory.sysOrgCode}
+		   </if>
+		   <if test="wxStory.title !=null and wxStory.title != ''">
+		   		and a.title = #{wxStory.title}
+		   </if>
+		   <if test="wxStory.category !=null and wxStory.category != ''">
+		   		and a.category = #{wxStory.category}
+		   </if>
+		   <if test="wxStory.storyDesc !=null and wxStory.storyDesc != ''">
+		   		and a.story_desc = #{wxStory.storyDesc}
+		   </if>
+		   <if test="wxStory.storyText !=null and wxStory.storyText != ''">
+		   		and a.story_text = #{wxStory.storyText}
+		   </if>
+		   <if test="wxStory.storyUrl !=null and wxStory.storyUrl != ''">
+		   		and a.story_url = #{wxStory.storyUrl}
+		   </if>
+		   <if test="wxStory.storyKey !=null and wxStory.storyKey != ''">
+		   		and a.story_key = #{wxStory.storyKey}
+		   </if>
+		   <if test="wxStory.isDownload !=null and wxStory.isDownload != ''">
+		   		and a.is_download = #{wxStory.isDownload}
+		   </if>
+		   <if test="wxStory.imgUrl !=null and wxStory.imgUrl != ''">
+		   		and a.img_url = #{wxStory.imgUrl}
+		   </if>
+		   group by a.title
+			order by  a.create_time  desc
+	</select>
+	
+	<select id="queryHaveTuijianStoryList" parameterType="Object"  resultType="java.util.HashMap">
+	     select a.id id,
+	     a.title title,
+	     a.story_desc storyDesc,
+	     a.img_url imgUrl,
+	     b.id storyGradeRelId
+	     from wx_story a,
+	      wx_story_grade_rel b
+			where a.id=b.story_id
+			<if test="gradeId !=null and gradeId != ''">
+		   		and b.grade_id=#{gradeId}
+		   </if> 
+		   <if test="wxStory.id !=null and wxStory.id != ''">
+		   		and a.id = #{wxStory.id}
+		   </if>
+		   <if test="wxStory.sysOrgCode !=null and wxStory.sysOrgCode != ''">
+		   		and a.sys_org_code = #{wxStory.sysOrgCode}
+		   </if>
+		   <if test="wxStory.title !=null and wxStory.title != ''">
+		   		and a.title = #{wxStory.title}
+		   </if>
+		   <if test="wxStory.category !=null and wxStory.category != ''">
+		   		and a.category = #{wxStory.category}
+		   </if>
+		   <if test="wxStory.storyDesc !=null and wxStory.storyDesc != ''">
+		   		and a.story_desc = #{wxStory.storyDesc}
+		   </if>
+		   <if test="wxStory.storyText !=null and wxStory.storyText != ''">
+		   		and a.story_text = #{wxStory.storyText}
+		   </if>
+		   <if test="wxStory.storyUrl !=null and wxStory.storyUrl != ''">
+		   		and a.story_url = #{wxStory.storyUrl}
+		   </if>
+		   <if test="wxStory.storyKey !=null and wxStory.storyKey != ''">
+		   		and a.story_key = #{wxStory.storyKey}
+		   </if>
+		   <if test="wxStory.isDownload !=null and wxStory.isDownload != ''">
+		   		and a.is_download = #{wxStory.isDownload}
+		   </if>
+		   <if test="wxStory.imgUrl !=null and wxStory.imgUrl != ''">
+		   		and a.img_url = #{wxStory.imgUrl}
+		   </if>
+			order by  a.create_time  desc
+	</select>
+
+<select id="queryNeedTuijianStoryList" parameterType="Object"  resultType="java.util.HashMap">
+	      select a.id id,
+	     a.title title,
+	     a.story_desc storyDesc,
+	     a.img_url imgUrl
+	     from wx_story a
+	      	where 
+a.id not in(
+ select c.story_id from wx_story_grade_rel c where c.grade_id=#{gradeId}
+)
+		   <if test="wxStory.id !=null and wxStory.id != ''">
+		   		and a.id = #{wxStory.id}
+		   </if>
+		   <if test="wxStory.sysOrgCode !=null and wxStory.sysOrgCode != ''">
+		   		and a.sys_org_code = #{wxStory.sysOrgCode}
+		   </if>
+		   <if test="wxStory.title !=null and wxStory.title != ''">
+		   		and a.title = #{wxStory.title}
+		   </if>
+		   <if test="wxStory.category !=null and wxStory.category != ''">
+		   		and a.category = #{wxStory.category}
+		   </if>
+		   <if test="wxStory.storyDesc !=null and wxStory.storyDesc != ''">
+		   		and a.story_desc = #{wxStory.storyDesc}
+		   </if>
+		   <if test="wxStory.storyText !=null and wxStory.storyText != ''">
+		   		and a.story_text = #{wxStory.storyText}
+		   </if>
+		   <if test="wxStory.storyUrl !=null and wxStory.storyUrl != ''">
+		   		and a.story_url = #{wxStory.storyUrl}
+		   </if>
+		   <if test="wxStory.storyKey !=null and wxStory.storyKey != ''">
+		   		and a.story_key = #{wxStory.storyKey}
+		   </if>
+		   <if test="wxStory.isDownload !=null and wxStory.isDownload != ''">
+		   		and a.is_download = #{wxStory.isDownload}
+		   </if>
+		   <if test="wxStory.imgUrl !=null and wxStory.imgUrl != ''">
+		   		and a.img_url = #{wxStory.imgUrl}
+		   </if>
+			order by  a.create_time  desc
+	</select>
+</mapper>

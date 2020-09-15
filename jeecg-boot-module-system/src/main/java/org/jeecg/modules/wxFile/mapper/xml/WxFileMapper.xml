@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.wxFile.mapper.WxFileMapper">
+
+	<select id="queryListByPid" parameterType="String"  resultType="org.jeecg.modules.system.model.TreeSelectModel">
+		select code,
+			   name as "title",
+			   id as "key",
+			   (case when has_child = '1' then 0 else 1 end) as isLeaf,
+			   pid as parentId
+			   from wx_file
+			where pid = #{pid}
+			order by create_time desc
+	</select>
+	
+
+</mapper>

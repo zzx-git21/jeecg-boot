@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.wxTaskTemplate.mapper.WxTaskTemplateMapper">
+<select id="querykebiaoInfo" parameterType="Object"  resultType="java.util.HashMap">
+	
+	SELECT
+		a.course_name,
+		b.banji_name,
+		c.grade_name,
+		c.mark
+	FROM
+		wx_kebiao a,
+		wx_banji b,
+		wx_grade c
+	WHERE
+		a.banji_code = b.id
+	AND b.grade_id = c.id
+	AND a.id = #{kebiaoid}
+	</select>
+	
+	<select id="queryTemplateList" parameterType="Object"  resultType="java.util.HashMap">
+	SELECT
+		*
+	FROM
+		wx_task_template
+	WHERE
+		kc_name=#{kcName}
+		and kcjb_name=#{kcjbName}
+	</select>
+</mapper>

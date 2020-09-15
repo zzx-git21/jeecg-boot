@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.wxPrincipalMail.mapper.WxPrincipalMailMapper">
+ <resultMap id="WxPrincipalMail" type="org.jeecg.modules.wxPrincipalMail.entity.WxPrincipalMail">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="sys_org_code" property="sysOrgCode" jdbcType="VARCHAR"/>
+        <result column="from_user_id" property="fromUserId" jdbcType="VARCHAR"/>
+        <result column="to_user_id" property="toUserId" jdbcType="VARCHAR"/>
+        <result column="msg_content" property="msgContent" jdbcType="VARCHAR"/>
+       <result column="replay_flag" property="replayFlag" jdbcType="VARCHAR"/>
+        <result column="msg_title" property="msgTitle" jdbcType="VARCHAR"/>
+        <result column="delete_status" property="deleteStatus" jdbcType="INTEGER"/>
+    </resultMap>
+
+ <select id="maillist" parameterType="Object" resultMap="WxPrincipalMail">
+        select a.* from wx_principal_mail a
+        where 1=1 
+        <if test="wxPrincipalMail.toUserId !=null and wxPrincipalMail.toUserId != ''">
+        and a.to_user_id =#{wxPrincipalMail.toUserId}
+        </if>
+         <if test="wxPrincipalMail.replayFlag !=null and wxPrincipalMail.replayFlag != ''">
+        and  a.replay_flag =#{wxPrincipalMail.replayFlag}
+        </if>
+        order by a.create_time desc
+    </select>
+      <select id="queryList" parameterType="Object" resultMap="WxPrincipalMail">
+        select a.* from wx_principal_mail a
+        where 1=1 
+        <if test="wxPrincipalMail.toUserId !=null and wxPrincipalMail.toUserId != ''">
+        and (a.to_userid =#{wxPrincipalMail.toUserId} or a.from_userid=#{wxPrincipalMail.toUserId} )
+        </if>
+         <if test="wxPrincipalMail.fromUserId !=null and wxPrincipalMail.fromUserId != ''">
+        and  (a.to_userid =#{wxPrincipalMail.fromUserId} or a.from_userid=#{wxPrincipalMail.fromUserId})
+        </if>
+      
+        order by a.create_time desc
+        
+    </select>
+    
+    
+    <update id="updateWxMailMsg" parameterType="Object" >
+        update wx_principal_mail as a set a.is_read=1 
+          where 1=1 
+        <if test="wxChatMsg.toUserid !=null and wxChatMsg.toUserid != ''">
+        and (a.to_userid =#{wxChatMsg.toUserid} or a.from_userid=#{wxChatMsg.toUserid} )
+        </if>
+         <if test="wxChatMsg.fromUserid !=null and wxChatMsg.fromUserid != ''">
+        and  (a.to_userid =#{wxChatMsg.fromUserid} or a.from_userid=#{wxChatMsg.fromUserid})
+        </if>
+</update>
+</mapper>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.wxTask.mapper.WxTaskMapper">
+<resultMap id="WxTask" type="org.jeecg.modules.wxTask.entity.WxTask" >
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="sys_org_code" property="sysOrgCode" jdbcType="VARCHAR"/>
+		<result column="course_task" property="courseTask" jdbcType="VARCHAR"/>
+		<result column="teaching_material" property="teachingMaterial" jdbcType="VARCHAR"/>
+		<result column="home_work" property="homeWork" jdbcType="VARCHAR"/>
+		<result column="review_language" property="reviewLanguage" jdbcType="VARCHAR"/>
+		<result column="key_language" property="keyLanguage" jdbcType="VARCHAR"/>
+		<result column="supp_language" property="suppLanguage" jdbcType="VARCHAR"/>
+		<result column="kebiao_id" property="kebiaoId" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	 <select id="getRecordList" parameterType="String"  resultType="java.util.HashMap">
+		   select a.name,a.code url,a.create_by,DATE_FORMAT(a.create_time,'%Y-%m-%d %H:%i:%s') createTime from wx_file a,wx_task_file_rel b
+			where a.id=b.file_id
+			and b.task_id=#{taskId}
+			order by a.create_by desc
+	</select>
+	
+	<select id="queryWxTaskByBanJiId" parameterType="Object"  resultType="java.util.HashMap">
+	   select a.id id,
+	   a.create_by createBy,
+	   DATE_FORMAT(a.create_time,'%Y-%m-%d %H:%i:%s') createTime,
+	   a.update_by updateBy,
+	   DATE_FORMAT(a.update_time,'%Y-%m-%d %H:%i:%s') updateTime,
+	   a.sys_org_code sysOrgCode,
+	   a.course_task courseTask,
+	   a.teaching_material teachingMaterial,
+	   a.home_work homeWork,
+	   a.review_language reviewLanguage,
+	   a.key_language keyLanguage,
+	   a.supp_language suppLanguage,
+	   a.kebiao_id kebiaoId,
+	   b.teacher teacher 
+	   
+	   from wx_task a left join wx_kebiao b
+			on a.kebiao_id=b.id
+			where 1=1
+			  <if test="idList!=null and idList.size() > 0">
+			and b.banji_code in
+			<foreach collection="idList" item="id" index="index"
+			 open="(" close=")" separator=",">
+	   #{id}
+	</foreach>
+ </if>
+			
+			<!-- <if test="banJiId !=null and banJiId != ''">
+		   		and b.banji_code in (#{banJiId})
+		   </if> -->
+		    <if test="wxTask.id !=null and wxTask.id != ''">
+		   		and a.id = #{wxTask.id}
+		   </if>
+		   
+		   <if test="wxTask.sysOrgCode !=null and wxTask.sysOrgCode != ''">
+		   		and a.sys_org_code = #{wxTask.sysOrgCode}
+		   </if>
+		   
+		   <if test="wxTask.courseTask !=null and wxTask.courseTask != ''">
+		   		and a.course_task = #{wxTask.courseTask}
+		   </if>
+		   <if test="wxTask.teachingMaterial !=null and wxTask.teachingMaterial != ''">
+		   		and a.teaching_material = #{wxTask.teachingMaterial}
+		   </if>
+		   
+		   <if test="wxTask.homeWork !=null and wxTask.homeWork != ''">
+		   		and a.home_work = #{wxTask.homeWork}
+		   </if>
+		   
+		   <if test="wxTask.keyLanguage !=null and wxTask.keyLanguage != ''">
+		   		and a.review_language = #{wxTask.keyLanguage}
+		   </if>
+		   
+		   
+		   <if test="wxTask.suppLanguage !=null and wxTask.suppLanguage != ''">
+		   		and a.supp_language = #{wxTask.suppLanguage}
+		   </if>
+		   
+		   <if test="wxTask.kebiaoId !=null and wxTask.kebiaoId != ''">
+		   		and a.kebiao_id = #{wxTask.kebiaoId}
+		   </if>
+		   
+			order by  a.create_time  desc
+	</select>
+</mapper>

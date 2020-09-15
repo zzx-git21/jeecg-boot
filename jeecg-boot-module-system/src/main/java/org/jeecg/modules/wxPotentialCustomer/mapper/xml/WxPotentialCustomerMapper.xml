@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.wxPotentialCustomer.mapper.WxPotentialCustomerMapper">
+
+<select id="queryComList" parameterType="Object"  resultType="java.util.HashMap">
+<if test="type !=null and type = '1'">
+SELECT
+    a.id,
+	a.zhouji,
+  CONCAT(DATE_FORMAT(a.start_time, '%Y-%m-%d'),' ',a.course_start_time) kechengTime,
+  a.course_time,
+  a.course_name name,
+	c.xiaoqu_name,
+	b.banji_name,
+	b.teacher_name,
+	b.bzr_name
+FROM
+	wx_kebiao a,
+	wx_banji b,
+	wx_xiaoqu c
+WHERE
+	a.banji_code = b.id
+AND b.owern_shcool = c.id
+and a.ifyy='1'
+<if test="keyword !=null and keyword != ''">
+		   		and a.course_name like  concat('%', #{keyword}, '%' )
+		   </if>
+</if>
+	</select>
+	
+	<select id="queryComListNew" parameterType="Object"  resultType="java.util.HashMap">
+		<if test="type !=null and type = '1'">
+					select * from wx_studynew where 1=1
+					<if test="querymap.studyName !=null and querymap.studyName != ''">
+				   		and study_name like  concat('%', #{querymap.studyName}, '%' )
+				   </if>
+		</if>
+	</select>
+	
+	<select id="tuifeiList" parameterType="Object"  resultType="java.util.HashMap">
+					SELECT
+						d.xiaoqu_name,c.season_code,c.course_code,c.banji_name,a.study_name,a.user_name,a.user_id,a.id studyid,a.discount_balance,a.discount_unit_price,
+						a.normal_balance,a.normal_unit_price,a.xuefei,a.zhekou,a.youhui,a.xiaohao_keshi,a.xiaohao_nomal_xuefei,a.xiaohao_discount_xuefei,a.shiji_xuefei,a.total_keshi
+						FROM
+							wx_studynew a
+						LEFT JOIN wx_banji c ON c.id=a.banji_id
+						LEFT JOIN wx_xiaoqu d ON d.id=c.owern_shcool
+					 where  1=1 
+					<if test="querymap.studyName !=null and querymap.studyName != ''">
+				   		and a.study_name like  concat('%', #{querymap.studyName}, '%' )
+				   </if>
+	</select>
+	
+	<select id="queryStudentCnt" parameterType="Object"  resultType="java.util.HashMap">
+		SELECT
+			ifnull(a.students_num, 0) totalnum,
+		  (select count(1) from wx_studynew b where b.banji_id=a.id) nownum,
+		  (select count(1) from wx_potential_customer c where c.banji=a.id) qknum
+		FROM
+			wx_banji a
+		WHERE
+			a.id = #{banjiId}
+	</select>
+	
+	<select id="queryQiandaoCnt" parameterType="Object"  resultType="java.util.HashMap">
+		SELECT count(1) cnt FROM wx_qiandao where study_id= #{studyId}
+	</select>
+	
+	<select id="queryXuefeiByBanjiid" parameterType="Object"  resultType="java.util.HashMap">
+		select b.xuefei xuefei, b.keshi ks,b.kc kc ,b. course_unit_price courseUnitPrice from wx_banji a, wx_course_level b where a.courselevel=b.id and a.id = #{banjiId}
+			
+	</select>
+	
+	<select id="queryJiaoFeiById" parameterType="Object"  resultType="java.util.HashMap">
+		SELECT * FROM wx_pay_record where qiankeid= #{qiankeId}
+			
+	</select>
+</mapper>
