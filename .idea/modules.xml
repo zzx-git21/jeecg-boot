@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/jeecg-boot-base-common/jeecg-boot-base-common.iml" filepath="$PROJECT_DIR$/jeecg-boot-base-common/jeecg-boot-base-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/jeecg-boot-module-system/jeecg-boot-module-system.iml" filepath="$PROJECT_DIR$/jeecg-boot-module-system/jeecg-boot-module-system.iml" />
       <module fileurl="file://$PROJECT_DIR$/jeecg-boot-parent.iml" filepath="$PROJECT_DIR$/jeecg-boot-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jeecg-boot-ssm/jeecg-boot-ssm.iml" filepath="$PROJECT_DIR$/jeecg-boot-ssm/jeecg-boot-ssm.iml" />
     </modules>
   </component>
 </project>
